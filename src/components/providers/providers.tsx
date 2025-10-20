@@ -1,13 +1,20 @@
+import { ClerkProvider } from "@clerk/clerk-react";
 import { HeroUIProvider } from "@heroui/react";
 import { RouterProvider } from "react-router";
+import { env } from "../../env";
+import { clerkAppearance, clerkLocalization } from "../../lib/clerk-config";
 import { router } from "../../routes/router";
 
 export function Providers() {
   return <>
     <HeroUIProvider>
-      <main className="text-foreground bg-background w-dvw h-dvh">
+      <ClerkProvider
+        publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY}
+        appearance={clerkAppearance}
+        localization={clerkLocalization}
+      >
         <RouterProvider router={router} />
-      </main>
+      </ClerkProvider>
     </HeroUIProvider>
   </>
 }
