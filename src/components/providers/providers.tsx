@@ -12,6 +12,8 @@ export function Providers() {
         publishableKey={env.VITE_CLERK_PUBLISHABLE_KEY}
         appearance={clerkAppearance}
         localization={clerkLocalization}
+        routerPush={(to) => router.navigate(to)}
+        routerReplace={(to) => router.navigate(to, { replace: true })}
       >
         <RouterProvider router={router} />
       </ClerkProvider>

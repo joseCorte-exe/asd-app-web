@@ -1,23 +1,25 @@
-import { SignIn } from "@clerk/clerk-react";
-import { useRedirectFromState } from "../../../hooks/use-redirect-from-state";
+import { SignIn, useAuth } from "@clerk/clerk-react";
+import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router";
 import { clerkAppearance } from "../../../lib/clerk-config";
 
-const REDIRECT_STORAGE_KEY = '@asd-app/redirect-from'
-
 export default function LoginPage() {
-  const from = useRedirectFromState()
+  const { isSignedIn } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const getRedirectUrl = () => {
-    if (from && from !== '/') {
-      sessionStorage.setItem(REDIRECT_STORAGE_KEY, from)
-      return from
+  // Pega a rota de onde veio ou usa home como padrão
+  const from = (location.state as { from?: string })?.from || "/";
+
+  useEffect(() => {
+    if (isSignedIn) {
+      navigate(from, { replace: true });
     }
-    return sessionStorage.getItem(REDIRECT_STORAGE_KEY) || from
+  }, [isSignedIn, navigate, from]);
+
+  if (isSignedIn) {
+    return null; // Ou um loading spinner
   }
-
-  const redirectUrl = getRedirectUrl()
-
-  console.log('LoginPage render, redirectUrl:', redirectUrl)
 
   return (
     <div className="flex justify-center items-center">
@@ -25,7 +27,7 @@ export default function LoginPage() {
         path="/signin"
         appearance={clerkAppearance}
         signUpUrl="/auth/signup"
-        forceRedirectUrl={redirectUrl}
+        forceRedirectUrl={from}
       />
     </div>
   );
