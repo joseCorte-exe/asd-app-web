@@ -11,6 +11,10 @@ export const commonRoutes: RouteObject[] = [
     lazy: lazyImport(import("../pages/auth/login"))
   },
   {
+    path: "/auth/login",
+    lazy: lazyImport(import("../pages/auth/login"))
+  },
+  {
     path: "/signin/sso-callback",
     lazy: lazyImport(import("../pages/auth/sso-callback"))
   },

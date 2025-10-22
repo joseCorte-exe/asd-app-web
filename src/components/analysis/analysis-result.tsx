@@ -60,8 +60,8 @@ export function AnalysisResult({ result, onNewAnalysis }: AnalysisResultProps) {
               {result.confidence >= 80
                 ? "Alta confiabilidade na análise"
                 : result.confidence >= 60
-                ? "Confiabilidade moderada - recomenda-se análise adicional"
-                : "Baixa confiabilidade - resultados inconclusivos"
+                  ? "Confiabilidade moderada - recomenda-se análise adicional"
+                  : "Baixa confiabilidade - resultados inconclusivos"
               }
             </p>
           </div>
